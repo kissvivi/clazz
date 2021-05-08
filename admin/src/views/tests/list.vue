@@ -3,33 +3,24 @@
     <div class="filter-container">
       <el-form :inline="true">
         <el-form-item>
-          <el-button type="success" size="mini" icon="el-icon-refresh" v-if="hasPermission('role:list')"
+          <el-button type="success" size="mini" icon="el-icon-refresh" v-if="hasPermission('tests:list')"
             @click.native.prevent="getRoleList">刷新</el-button>
-          <el-button type="primary" size="mini" icon="el-icon-plus" v-if="hasPermission('role:add')"
-            @click.native.prevent="showAddRoleDialog">添加角色</el-button>
+          <el-button type="primary" size="mini" icon="el-icon-plus" v-if="hasPermission('tests:add')"
+            @click.native.prevent="showAddRoleDialog">添加考试</el-button>
         </el-form-item>
       </el-form>
     </div>
     <el-table :data="roleList" v-loading.body="listLoading" element-loading-text="loading" border fit
       highlight-current-row>
-      <el-table-column label="#" align="center" width="80">
-        <template slot-scope="scope">
-          <span v-text="getTableIndex(scope.$index)"></span>
-        </template>
-      </el-table-column>
-      <el-table-column label="角色名" align="center" prop="name" />
+      <el-table-column label="考试编号" align="center" prop="name" />
+      <el-table-column label="考试标题" align="center" prop="name" />
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">{{ unix2CurrentTime(scope.row.createTime) }}</template>
       </el-table-column>
-      <el-table-column label="修改时间" align="center" prop="updateTime">
-        <template slot-scope="scope">{{ unix2CurrentTime(scope.row.updateTime) }}</template>
-      </el-table-column>
-      <el-table-column label="管理" align="center" v-if="hasPermission('role:detail') || hasPermission('role:update') || hasPermission('role:delete')">
+      <el-table-column label="管理" align="center" v-if="hasPermission('tests:detail') || hasPermission('tests:update') || hasPermission('tests:delete')">
         <template slot-scope="scope">
-          <el-button type="info" size="mini" v-if="hasPermission('role:detail')" @click.native.prevent="showRoleDialog(scope.$index)">查看</el-button>
-          <el-button type="warning" size="mini" v-if="hasPermission('role:update') && scope.row.name !== '超级管理员'"
-            @click.native.prevent="showUpdateRoleDialog(scope.$index)">修改</el-button>
-          <el-button type="danger" size="mini" v-if="hasPermission('role:delete') && scope.row.name !== '超级管理员'"
+          <el-button type="info" size="mini" v-if="hasPermission('tests:detail')" @click.native.prevent="showRoleDialog(scope.$index)">查看</el-button>
+          <el-button type="danger" size="mini" v-if="hasPermission('tests:delete')"
             @click.native.prevent="removeRole(scope.$index)">删除</el-button>
         </template>
       </el-table-column>
@@ -80,10 +71,10 @@
 
   export default {
     created() {
-      if (this.hasPermission('role:update')) {
+      if (this.hasPermission('tests:update')) {
         this.getPermissionList()
       }
-      if (this.hasPermission('role:list')) {
+      if (this.hasPermission('tests:list')) {
         this.getRoleList()
       }
     },
@@ -141,7 +132,7 @@
           add: '添加角色'
         },
         btnLoading: false,
-        tempRole: {
+        temptests: {
           id: '',
           name: '',
           permissionIdList: []
@@ -160,16 +151,6 @@
     },
     methods: {
       unix2CurrentTime,
-      /**
-       * 获取所有角色权限
-       */
-      getPermissionList() {
-        listResourcePermission().then(response => {
-          this.permissionList = response.data.list
-        }).catch(res => {
-          this.$message.error('加载权限列表失败')
-        })
-      },
       /**
        * 获取角色列表
        */
