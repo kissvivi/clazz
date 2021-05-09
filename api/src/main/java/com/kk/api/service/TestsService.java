@@ -5,7 +5,7 @@ import com.kk.api.core.service.Service;
 
 /**
 * @author kk
-* @date 2021/05/02
+* @date 2021/05/09
 */
 public interface TestsService extends Service<Tests> {
 

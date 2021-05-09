@@ -60,8 +60,8 @@ class CodeGenerator {
     }
 //    CodeGenerator.genCode("clazz", "Clazz");
 //    CodeGenerator.genCode("clazz_student", "ClazzStudent");
-    CodeGenerator.genCode("student", "Student");
-//    CodeGenerator.genCode("tests", "Tests");
+//    CodeGenerator.genCode("student", "Student");
+    CodeGenerator.genCode("tests", "Tests");
 //    CodeGenerator.genCode("test_bank", "TestBank");
 //    CodeGenerator.genCode("test_student", "TestStudent");
     // genCodeByCustomModelName("输入表名","输入自定义Model名称");

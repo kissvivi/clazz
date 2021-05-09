@@ -5,10 +5,13 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="code" jdbcType="BIGINT" property="code" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="tb_id" jdbcType="BIGINT" property="tbId" />
+    <result column="tb_ids" jdbcType="VARCHAR" property="tbIds" />
+    <result column="clazz_id" jdbcType="BIGINT" property="clazzId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
 </mapper>

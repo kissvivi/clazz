@@ -24,10 +24,26 @@ public class Tests {
     private String title;
 
     /**
-     * 题目id
+     * 题目id集
      */
-    @Column(name = "tb_id")
-    private Long tbId;
+    @Column(name = "tb_ids")
+    private String tbIds;
+
+    /**
+     * 班级id
+     */
+    @Column(name = "clazz_id")
+    private Long clazzId;
+
+    /**
+     * 状态（0：未发布，1：已发布）
+     */
+    private Integer status;
+
+    /**
+     * 考试类型
+     */
+    private Integer type;
 
     /**
      * @return id
@@ -98,20 +114,74 @@ public class Tests {
     }
 
     /**
-     * 获取题目id
+     * 获取题目id集
      *
-     * @return tb_id - 题目id
+     * @return tb_ids - 题目id集
      */
-    public Long getTbId() {
-        return tbId;
+    public String getTbIds() {
+        return tbIds;
     }
 
     /**
-     * 设置题目id
+     * 设置题目id集
      *
-     * @param tbId 题目id
+     * @param tbIds 题目id集
      */
-    public void setTbId(Long tbId) {
-        this.tbId = tbId;
+    public void setTbIds(String tbIds) {
+        this.tbIds = tbIds;
+    }
+
+    /**
+     * 获取班级id
+     *
+     * @return clazz_id - 班级id
+     */
+    public Long getClazzId() {
+        return clazzId;
+    }
+
+    /**
+     * 设置班级id
+     *
+     * @param clazzId 班级id
+     */
+    public void setClazzId(Long clazzId) {
+        this.clazzId = clazzId;
+    }
+
+    /**
+     * 获取状态（0：未发布，1：已发布）
+     *
+     * @return status - 状态（0：未发布，1：已发布）
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置状态（0：未发布，1：已发布）
+     *
+     * @param status 状态（0：未发布，1：已发布）
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取考试类型
+     *
+     * @return type - 考试类型
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * 设置考试类型
+     *
+     * @param type 考试类型
+     */
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

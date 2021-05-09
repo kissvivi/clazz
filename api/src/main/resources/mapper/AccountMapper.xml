@@ -4,7 +4,7 @@
 
     <resultMap id="AccountMap" type="com.kk.api.entity.Account">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
@@ -59,7 +59,7 @@
         LEFT JOIN permission p ON rp.permission_id = p.id
         <where>
             <if test="id != null">a.id = #{id}</if>
-            <if test="email != null">a.email = #{email}</if>
+            <if test="phone != null">a.phone = #{phone}</if>
             <if test="name != null">a.name = #{name}</if>
         </where>
     </select>

@@ -18,8 +18,8 @@ public class Account {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  /** 邮箱 */
-  private String email;
+  /** 手机号 */
+  private String phone;
 
   /** 用户名 */
   private String name;

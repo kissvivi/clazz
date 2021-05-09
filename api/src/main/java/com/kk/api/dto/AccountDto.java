@@ -18,9 +18,9 @@ public class AccountDto {
   private Long id;
 
   /** 邮箱 */
-  @NotEmpty(message = "邮箱不能为空")
+  @NotEmpty(message = "手机号不能为空")
   @Email
-  private String email;
+  private String phone;
 
   /** 用户名 */
   @NotEmpty(message = "用户名不能为空")

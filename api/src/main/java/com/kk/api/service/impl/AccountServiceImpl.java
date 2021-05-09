@@ -49,7 +49,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
     if (a != null) {
       throw new ServiceException("用户名已存在");
     } else {
-      a = this.getBy("email", accountDto.getEmail());
+      a = this.getBy("phone", accountDto.getPhone());
       if (a != null) {
         throw new ServiceException("邮箱已存在");
       } else {

@@ -127,8 +127,8 @@ public class AccountController {
   public Result login(@RequestBody final Account account) {
     // {"name":"admin", "password":"admin123"}
     // {"email":"admin@qq.com", "password":"admin123"}
-    if (account.getName() == null && account.getEmail() == null) {
-      return ResultGenerator.genFailedResult("用户名或邮箱为空");
+    if (account.getName() == null && account.getPhone() == null) {
+      return ResultGenerator.genFailedResult("用户名或手机号为空");
     }
     if (account.getPassword() == null) {
       return ResultGenerator.genFailedResult("密码为空");
@@ -142,10 +142,10 @@ public class AccountController {
       }
     }
     // 邮箱登录
-    if (account.getEmail() != null) {
-      dbAccount = this.accountService.getBy("email", account.getEmail());
+    if (account.getPhone() != null) {
+      dbAccount = this.accountService.getBy("phone", account.getPhone());
       if (dbAccount == null) {
-        return ResultGenerator.genFailedResult("邮箱错误");
+        return ResultGenerator.genFailedResult("手机号错误");
       }
       account.setName(dbAccount.getName());
     }
