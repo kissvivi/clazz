@@ -4,18 +4,38 @@
       <el-form :inline="true">
         <el-form-item>
           <el-button type="success" size="mini" icon="el-icon-refresh" v-if="hasPermission('tests:list')"
-            @click.native.prevent="getRoleList">刷新</el-button>
-          <el-button type="primary" size="mini" icon="el-icon-plus" v-if="hasPermission('tests:add')"
-            @click.native.prevent="showAddRoleDialog">添加考试</el-button>
+            @click.native.prevent="getTestsList">刷新</el-button>
+          <!-- <el-button type="primary" size="mini" icon="el-icon-plus" v-if="hasPermission('tests:add')"
+            @click.native.prevent="showAddRoleDialog">添加考试</el-button> -->
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="roleList" v-loading.body="listLoading" element-loading-text="loading" border fit
+    <el-table :data="testsList" v-loading.body="listLoading" element-loading-text="loading" border fit
       highlight-current-row>
-      <el-table-column label="考试编号" align="center" prop="name" />
-      <el-table-column label="考试标题" align="center" prop="name" />
-      <el-table-column label="创建时间" align="center" prop="createTime">
-        <template slot-scope="scope">{{ unix2CurrentTime(scope.row.createTime) }}</template>
+      <el-table-column label="考试编号" align="center" prop="code" />
+      <el-table-column label="考试标题" align="center" prop="title" />
+      <el-table-column :filters="[{ text: '试题', value: 101 }, { text: '问卷调查', value: 102 }]" :filter-method="filterType" label="类型" align="center" >
+      <template slot-scope="scope" >{{ getTypeName(scope.row.type) }}</template>
+      </el-table-column>
+      <el-table-column label="题目集" align="center" prop="tbIds" />
+      <el-table-column label="是否发布" align="center" prop="status">
+
+        <template slot-scope="scope">
+
+          <el-tag v-if ="scope.row.status === 1"
+                  type="success"
+                  disable-transitions>已发布</el-tag>
+
+          <el-button v-if ="scope.row.status === 0"
+          size="mini"
+                  @click.native.prevent="showAddRoleDialog"
+                  disable-transitions>未发布（点击发布）</el-button>
+          <!-- <el-tag
+                  :type="scope.row.status === 1 ? 'primary' : 'success'"
+                  disable-transitions>{{scope.row.status === 1 ? '未发布' : '已发布'}}</el-tag> --></template>
+      </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="time">
+        <template slot-scope="scope">{{ unix2CurrentTime(scope.row.time) }}</template>
       </el-table-column>
       <el-table-column label="管理" align="center" v-if="hasPermission('tests:detail') || hasPermission('tests:update') || hasPermission('tests:delete')">
         <template slot-scope="scope">
@@ -29,7 +49,7 @@
       :page-size="listQuery.size" :total="total" :page-sizes="[9, 18, 36, 72]" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
 
     <!-- 添加考试开始 -->
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <!-- <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form status-icon class="small-space" label-position="left" label-width="100px" style="width: 800px; margin-left:50px;"
         :model="tempRole" :rules="createRules" ref="tempRole">
         <el-form-item label="角色名" prop="name" required>
@@ -50,17 +70,48 @@
         <el-button v-if="dialogStatus === 'add'" type="success" :loading="btnLoading" @click.native.prevent="addRole">添加</el-button>
         <el-button v-if="dialogStatus === 'update'" type="primary" :loading="btnLoading" @click.native.prevent="updateRole">更新</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
     <!-- 添加考试结束 -->
+
+
+    <!-- 发布开始 -->
+    <el-dialog title="发布考试/问卷" :visible.sync="dialogFormVisible">
+      <el-form status-icon class="small-space" label-position="left" label-width="100px" style="width: 800px; margin-left:50px;"
+        :model="tempClazz" ref="tempClazz">
+<el-form-item label="班级选择" prop="name" required>
+        <el-select v-model="tempClazz.id" placeholder="请选择班级">
+            <el-option
+              v-for="item in clazzList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+</el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native.prevent="dialogFormVisible = false">取消</el-button>
+        <el-button  :loading="btnLoading" @click.native.prevent="updateStatus">发布</el-button>
+      </div>
+    </el-dialog>
+    <!-- 发布结束 -->
+
+
   </div>
 </template>
 <script>
+  import {
+    list as getTestsList,
+    remove
+  } from '@/api/tests'
+  import {
+    list as getClazzList,
+  } from '@/api/clazz'
   import {
     listRoleWithPermission,
     listResourcePermission,
     add as addRole,
     update as updateRole,
-    remove
   } from '@/api/role'
   import {
     unix2CurrentTime
@@ -75,7 +126,7 @@
         this.getPermissionList()
       }
       if (this.hasPermission('tests:list')) {
-        this.getRoleList()
+        this.getTestsList()
       }
     },
     data() {
@@ -116,14 +167,18 @@
           return item.pinyin.indexOf(query) > -1;
         },
 
-
-        roleList: [],
+        clazzList:[],
+        testsList: [],
         permissionList: [],
         listLoading: false,
         total: 0,
         listQuery: {
           page: 1,
           size: 9
+        },
+        listClazzQuery: {
+          page: 1,
+          size: 999
         },
         dialogStatus: 'add',
         dialogFormVisible: false,
@@ -137,6 +192,7 @@
           name: '',
           permissionIdList: []
         },
+        tempClazz:{},
         createRules: {
           name: [{
             required: true,
@@ -152,17 +208,47 @@
     methods: {
       unix2CurrentTime,
       /**
-       * 获取角色列表
+       * 获取列表
        */
-      getRoleList() {
+      getTestsList() {
         this.listLoading = true
-        listRoleWithPermission(this.listQuery).then(response => {
-          this.roleList = response.data.list
+        getTestsList(this.listQuery).then(response => {
+          this.testsList = response.data.list
           this.total = response.data.total
           this.listLoading = false
         }).catch(res => {
-          this.$message.error('加载角色列表失败')
+          this.$message.error('加载列表失败')
         })
+      },
+    /**
+     * 获取班级列表
+     */
+    getClazzList() {
+      this.listLoading = true
+      getClazzList(this.listClazzQuery).then(response => {
+        this.clazzList = response.data.list
+        //this.total = response.data.total
+        this.listLoading = false
+      }).catch(res => {
+        this.$message.error('加载班级列表失败')
+      })
+    },
+      /**
+       * 根据code 得到类型
+       * @param {Object} type
+       */
+      getTypeName(type){
+        if(type == 101)
+        return '试题'
+        else
+        return '问卷调查'
+      },
+
+      /**
+       * 发布题目更新班级与状态
+       */
+      updateStatus(){
+        this.$message.error('更新班级与状态')
       },
       /**
        * 改变每页数量
@@ -171,7 +257,7 @@
       handleSizeChange(size) {
         this.listQuery.page = 1
         this.listQuery.size = size
-        this.getRoleList()
+        this.getTestsList()
       },
       /**
        * 改变页码
@@ -179,7 +265,7 @@
        */
       handleCurrentChange(page) {
         this.listQuery.page = page
-        this.getRoleList()
+        this.getTestsList()
       },
       /**
        * 表格序号
@@ -206,7 +292,7 @@
       showUpdateRoleDialog(index) {
         this.dialogFormVisible = true
         this.dialogStatus = 'update'
-        const role = this.roleList[index]
+        const role = this.testsList[index]
         this.tempRole.name = role.name
         this.tempRole.id = role.id
         this.tempRole.permissionIdList = []
@@ -225,7 +311,7 @@
       showRoleDialog(index) {
         this.dialogFormVisible = true
         this.dialogStatus = 'show'
-        const role = this.roleList[index]
+        const role = this.testsList[index]
         this.tempRole.name = role.name
         this.tempRole.id = role.id
         this.tempRole.permissionIdList = []
@@ -255,7 +341,7 @@
             this.btnLoading = true
             addRole(this.tempRole).then(() => {
               this.$message.success('添加成功')
-              this.getRoleList()
+              this.getTestsList()
               this.dialogFormVisible = false
               this.btnLoading = false
             }).catch(res => {
@@ -278,7 +364,7 @@
             this.btnLoading = true
             updateRole(this.tempRole).then(() => {
               this.$message.success('更新成功')
-              this.getRoleList()
+              this.getTestsList()
               this.dialogFormVisible = false
               this.btnLoading = false
             }).catch(res => {
@@ -296,8 +382,8 @@
        * @returns {boolean}
        */
       isRoleNameUnique(id, name) {
-        for (let i = 0; i < this.roleList.length; i++) {
-          if (this.roleList[i].id !== id && this.roleList[i].name === name) {
+        for (let i = 0; i < this.testsList.length; i++) {
+          if (this.testsList[i].id !== id && this.testsList[i].name === name) {
             this.$message.error('角色名已存在')
             return false
           }
@@ -305,20 +391,20 @@
         return true
       },
       /**
-       * 移除角色
+       * 移除考试
        * @param index 角色下标
        * @returns {boolean}
        */
       removeRole(index) {
-        this.$confirm('删除该角色？', '警告', {
+        this.$confirm('删除该考试/问卷？', '警告', {
           confirmButtonText: '是',
           cancelButtonText: '否',
           type: 'warning'
         }).then(() => {
-          const roleId = this.roleList[index].id
+          const roleId = this.testsList[index].id
           remove(roleId).then(() => {
             this.$message.success('删除成功')
-            this.getRoleList()
+            this.getTestsList()
           }).catch(() => {
             this.$message.error('删除失败')
           })

@@ -15,9 +15,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="9">
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-if="toUpdate" v-model="tmpAccount.email" />
-            <span v-else>{{ tmpAccount.email }}</span>
+          <el-form-item label="手机号" prop="phone">
+            <el-input v-if="toUpdate" v-model="tmpAccount.phone" />
+            <span v-else>{{ tmpAccount.phone }}</span>
           </el-form-item>
         </el-col>
       </el-row>
@@ -42,7 +42,7 @@
             <el-button type="primary" :loading="btnLoading" @click.native.prevent="updateDetail">确认修改</el-button>
             <el-button type="warning" @click.native.prevent="toUpdate = !toUpdate">取消修改</el-button>
           </el-col>
-          
+
           <el-col :span="6">
             <el-button type="danger" @click.native.prevent="showUpdatePasswordDialog">修改密码</el-button>
           </el-col>
@@ -149,9 +149,9 @@ export default {
         callback()
       }
     }
-    const validateEmail = (rule, value, callback) => {
-      if (!isValidateEmail(value)) {
-        callback(new Error('邮箱格式错误'))
+    const validatePhone = (rule, value, callback) => {
+      if (!isValidatePhone(value)) {
+        callback(new Error('s手机号格式错误'))
       } else {
         callback()
       }
@@ -180,11 +180,11 @@ export default {
       tmpAccount: {
         id: '',
         name: '',
-        email: ''
+        phone: ''
       },
       updateDetailRules: {
         name: [{ required: true, trigger: 'blur', validator: validateName }],
-        email: [{ required: true, trigger: 'blur', validator: validateEmail }]
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }]
       }
     }
   },
@@ -200,7 +200,7 @@ export default {
      */
     setDetail() {
       this.tmpAccount.name = this.account.name
-      this.tmpAccount.email = this.account.email
+      this.tmpAccount.phone = this.account.phone
     },
     /**
      * 验证旧密码

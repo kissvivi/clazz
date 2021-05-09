@@ -17,6 +17,16 @@
             v-if="hasPermission('testBank:add')"
             @click.native.prevent="showAddTestBankDialog"
           >添加题目</el-button>
+</el-form-item>
+<el-form-item class="submit-tests">
+          <el-button
+
+            type="warning"
+            size="mini"
+            icon="el-icon-plus"
+            v-if="hasPermission('testBank:add')"
+            @click.native.prevent="showAddTestsDialog"
+          >组卷/生成问卷</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -28,10 +38,14 @@
       fit
       highlight-current-row
     >
+    <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
       <el-table-column label="#" align="center" prop="id" width="80">
       </el-table-column>
       <el-table-column label="题目" align="center" prop="title" />
-      <el-table-column label="类型" align="center" >
+      <el-table-column :filters="[{ text: '试题', value: 101 }, { text: '问卷调查', value: 102 }]" :filter-method="filterType" label="类型" align="center" >
       <template slot-scope="scope" >{{ getTypeName(scope.row.type) }}</template>
       </el-table-column>
       <el-table-column label="正确选项" align="center" prop="selectOk" />
@@ -74,6 +88,21 @@
       :page-sizes="[9, 18, 36, 72]"
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
+
+    <!-- <div class="submit-tests">
+      <el-form :inline="true">
+        <el-form-item>
+          <el-button
+            type="success"
+            size="mini"
+            icon="el-icon-plus"
+            v-if="hasPermission('testBank:add')"
+            @click.native.prevent="showAddTestBankDialog"
+          >组卷/生成调查问卷</el-button>
+        </el-form-item>
+      </el-form>
+    </div> -->
+
 
     <!-- 添加题目开始 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
@@ -180,6 +209,60 @@
       </div>
     </el-dialog>
     <!-- 添加题目结束 -->
+
+
+    <!-- 添加考试开始 -->
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogTestsFormVisible">
+      <el-form
+        status-icon
+        class="small-space"
+        label-position="left"
+        label-width="100px"
+        style="width: 500px; margin-left:50px;"
+        :model="tempTestBank"
+        :rules="createRules"
+        ref="tempTests"
+      >
+        <el-form-item label="编号" prop="code" required>
+          <el-input
+            :disabled="dialogStatus === 'show'"
+            type="text"
+            prefix-icon="el-icon-edit"
+            auto-complete="off"
+            v-model="tempTests.code"
+          ></el-input>
+          </el-form-item>
+          <el-form-item label="标题" prop="title" required>
+            <el-input
+              :disabled="dialogStatus === 'show'"
+              type="text"
+              prefix-icon="el-icon-edit"
+              auto-complete="off"
+              v-model="tempTests.title"
+            ></el-input>
+        </el-form-item>
+        <el-form-item label="类型" prop="type" required>
+          <el-select v-model="tempTests.type" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native.prevent="dialogTestsFormVisible = false">取消</el-button>
+        <el-button
+          type="success"
+          :loading="btnLoading"
+          @click.native.prevent="addTestBank"
+        >添加</el-button>
+      </div>
+    </el-dialog>
+    <!-- 添加考试结束 -->
   </div>
 </template>
 <script>
@@ -239,10 +322,13 @@ export default {
       },
       dialogStatus: 'add',
       dialogFormVisible: false,
+      dialogTestsFormVisible: false,
       textMap: {
-        add: '添加题目'
+        add: '添加题目',
+        addTests: '添加考试/问卷'
       },
       btnLoading: false,
+      tempTests:{},
       tempTestBank: {
         id: '',
         name: '',
@@ -317,6 +403,23 @@ export default {
       // this.tempTestBank.name = ''
       // this.tempTestBank.id = ''
     },
+
+    /**
+     * 显示新增考试
+     */
+    showAddTestsDialog() {
+      this.dialogTestsFormVisible = true
+      this.dialogStatus = 'addTests'
+      // this.tempTestBank.name = ''
+      // this.tempTestBank.id = ''
+    },
+    //过滤类型
+     filterType(value, row) {
+            console.log("value:"+value)
+            //console.log("row.type:"+row.type)
+            return row.type === value;
+          },
+
     /**
      * 显示更新角色的对话框
      * @param index 角色下标
@@ -551,3 +654,10 @@ export default {
   }
 }
 </script>
+<style>
+  .submit-tests{
+
+        position: absolute;
+        right: 18px;
+  }
+</style>

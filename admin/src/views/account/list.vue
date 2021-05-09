@@ -51,7 +51,7 @@
         </template>
       </el-table-column>
       <el-table-column label="账户名" align="center" prop="name" width="180" />
-      <el-table-column label="邮箱" align="center" prop="email" width="200" />
+      <el-table-column label="手机号" align="center" prop="phone" width="200" />
       <el-table-column label="注册时间" align="center" prop="registerTime" width="160">
         <template slot-scope="scope">{{ unix2CurrentTime(scope.row.registerTime) }}</template>
       </el-table-column>
@@ -112,13 +112,13 @@
             v-model="tmpAccount.name"
           />
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="手机号" prop="phone">
           <el-input
             type="text"
             prefix-icon="el-icon-message"
             auto-complete="off"
             :disabled="dialogStatus === 'updateRole'"
-            v-model="tmpAccount.email"
+            v-model="tmpAccount.phone"
           />
         </el-form-item>
         <el-form-item label="密码" prop="password" required
@@ -170,7 +170,7 @@
 <script>
 import { list as getAccountList, search, register, remove, update as updateAccount } from '@/api/account'
 import { list as getRoleList, updateAccountRole } from '@/api/role'
-import { isValidateEmail } from '@/utils/validate'
+import { isValidatePhone } from '@/utils/validate'
 import { unix2CurrentTime } from '@/utils'
 import { mapGetters } from 'vuex'
 
@@ -184,9 +184,9 @@ export default {
     }
   },
   data() {
-    const validateEmail = (rule, value, callback) => {
-      if (!isValidateEmail(value)) {
-        callback(new Error('邮箱格式错误'))
+    const validatePhone = (rule, value, callback) => {
+      if (!isValidatePhone(value)) {
+        callback(new Error('手机号格式错误'))
       } else {
         callback()
       }
@@ -225,7 +225,7 @@ export default {
       btnLoading: false, // 按钮等待动画
       tmpAccount: {
         accountId: '',
-        email: '',
+        phone: '',
         name: '',
         password: '',
         roleId: 2 // 对应后端数据库普通用户角色Id
@@ -237,7 +237,7 @@ export default {
         roleName: null
       },
       createRules: {
-        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
         name: [{ required: true, trigger: 'blur', validator: validateName }],
         password: [
           { required: true, trigger: 'blur', validator: validatePassword }
@@ -327,7 +327,7 @@ export default {
       // 显示新增对话框
       this.dialogFormVisible = true
       this.dialogStatus = 'add'
-      this.tmpAccount.email = ''
+      this.tmpAccount.phone = ''
       this.tmpAccount.name = ''
       this.tmpAccount.password = ''
     },
@@ -358,7 +358,7 @@ export default {
       this.dialogFormVisible = true
       this.dialogStatus = 'update'
       this.tmpAccount.accountId = this.accountList[index].id
-      this.tmpAccount.email = this.accountList[index].email
+      this.tmpAccount.phone = this.accountList[index].phone
       this.tmpAccount.name = this.accountList[index].name
       this.tmpAccount.password = ''
       this.tmpAccount.roleId = this.accountList[index].roleId
@@ -383,7 +383,7 @@ export default {
       this.dialogFormVisible = true
       this.dialogStatus = 'updateRole'
       this.tmpAccount.accountId = this.accountList[index].id
-      this.tmpAccount.email = this.accountList[index].email
+      this.tmpAccount.phone = this.accountList[index].phone
       this.tmpAccount.name = this.accountList[index].name
       this.tmpAccount.password = ''
       this.tmpAccount.roleId = this.accountList[index].roleId
@@ -410,8 +410,8 @@ export default {
           this.$message.error('账户名已存在')
           return false
         }
-        if (this.accountList[i].email === account.email) {
-          this.$message.error('邮箱已存在')
+        if (this.accountList[i].phone === account.phone) {
+          this.$message.error('手机号已存在')
           return false
         }
       }
