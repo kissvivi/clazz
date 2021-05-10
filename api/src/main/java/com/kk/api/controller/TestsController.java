@@ -39,6 +39,12 @@ testsService.update(tests);
 return ResultGenerator.genOkResult();
 }
 
+    @PutMapping("/updateStatus")
+    public Result updateStatus(@RequestBody Tests tests) {
+        testsService.updateClazzIdById(tests.getId(),tests.getClazzId());
+        return ResultGenerator.genOkResult();
+    }
+
 @GetMapping("/{id}")
 public Result detail(@PathVariable Long id) {
 Tests tests = testsService.getById(id);
@@ -53,4 +59,5 @@ List<Tests> list = testsService.listAll();
 PageInfo<Tests> pageInfo = PageInfo.of(list);
 return ResultGenerator.genOkResult(pageInfo);
 }
+
 }

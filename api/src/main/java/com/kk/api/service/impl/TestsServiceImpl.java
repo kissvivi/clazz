@@ -19,4 +19,8 @@ public class TestsServiceImpl extends AbstractService<Tests> implements TestsSer
 @Resource
 private TestsMapper testsMapper;
 
+    @Override
+    public int updateClazzIdById(Long id, Long clazzId) {
+        return testsMapper.updateClazzIdById(id,clazzId);
+    }
 }

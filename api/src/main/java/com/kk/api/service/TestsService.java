@@ -9,4 +9,5 @@ import com.kk.api.core.service.Service;
 */
 public interface TestsService extends Service<Tests> {
 
+    int updateClazzIdById(Long id,Long clazzId);
 }

@@ -19,7 +19,7 @@ public class AccountDto {
 
   /** 邮箱 */
   @NotEmpty(message = "手机号不能为空")
-  @Email
+  @Size(min = 11, message = "用户名长度不能小于11")
   private String phone;
 
   /** 用户名 */
