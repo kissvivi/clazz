@@ -1,0 +1,6 @@
+
+<view class="exam">
+    <van-cell-group wx:for="{{list}}" wx:key="id" wx:for-item="item">
+        <van-cell title="{{item.title}}" label="{{item.content}}" value="待发布"/>
+    </van-cell-group>
+</view>

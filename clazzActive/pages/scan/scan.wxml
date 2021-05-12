@@ -1,0 +1,13 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="scan-btn" wx:if="{{result == ''}}">
+        <van-button type="primary" bind:click="getCode">扫一扫 加入班级</van-button>
+        <!-- <view class="button" bindtap="getCode">扫一扫 加入班级</view> -->
+    </view>
+    <view class="content" wx:if="{{result != ''}}">
+        <!-- <view>扫码的内容:{{ result }}</view> -->
+        <view class="title">{{ className }}</view>
+        <van-button type="primary" class="jion-btn" bind:click="jionClass">加入此班级</van-button>
+        <!-- <view class="button" bindtap="jionClass">加入此班级</view> -->
+    </view>
+</view>

@@ -1,0 +1,17 @@
+<!--index.wxml-->
+<view class="main">
+    <view class="flex-wrp" style="flex-direction:column;">
+        <view class="flex-item" style="background-color:#1BCFAD" bindtap="toUrl">
+            <image src="/assets/images/do-question.png">
+            </image>
+            <view class="title" > 发布测试题 </view>
+            <!-- <view class="">do-question</view> -->
+        </view>
+        <view class="flex-item" catchtap="toUrl" style="background-image:url(https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg);">
+            <!-- <image mode="aspectFill" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"> -->
+             
+            <!-- </image> -->
+            <view class="title"> 发布问卷调查 </view>
+        </view>
+    </view>
+</view>

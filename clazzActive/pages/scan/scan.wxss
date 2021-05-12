@@ -1,0 +1,23 @@
+.scan-btn {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-top: 50%;
+  color: #fff;
+  text-align: center;
+  background-color: #1bcfad;
+  border-radius: 20px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-top: 30%;
+}
+.content .title {
+  text-align: center;
+}
+.content .jion-btn {
+  margin-top: 100rpx;
+  align-content: center;
+}

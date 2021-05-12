@@ -1,0 +1,38 @@
+{
+  "pages":[
+    "pages/login/login",
+    "pages/index/index",
+    "pages/main/main",
+    "pages/person/person",
+    "pages/scan/scan",
+    "pages/logs/logs",
+    "pages/test/test",
+    "pages/teacher/teacher",
+    "pages/testList/testList"
+  ],
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#111",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "首页",
+        "iconPath": "assets/images/home.png",
+        "selectedIconPath": "assets/images/home-active.png"
+      },
+      {
+        "pagePath": "pages/person/person",
+        "text": "个人中心",
+        "iconPath": "assets/images/person.png",
+        "selectedIconPath": "assets/images/person-active.png"
+      }
+    ]
+  },
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "课堂互动小程序",
+    "navigationBarTextStyle":"black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

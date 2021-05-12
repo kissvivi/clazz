@@ -1,0 +1,20 @@
+{
+  "name": "clazzactive",
+  "version": "1.0.0",
+  "description": "ketang hudong ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.6.8",
+    "amfe-flexible": "^2.2.1",
+    "lib-flexible": "^0.3.2",
+    "postcss-px2rem-exclude": "0.0.6"
+  },
+  "devDependencies": {
+    "postcss-pxtorem": "^6.0.0"
+  }
+}

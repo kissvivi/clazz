@@ -1,0 +1,29 @@
+.main {
+  width: 100%;
+}
+.main .flex-wrp {
+  padding: 30rpx 40rpx;
+}
+.main .flex-wrp .flex-item {
+  position: relative;
+  width: 100%;
+  height: 280rpx;
+  margin-top: 20rpx;
+  border-radius: 8rpx;
+}
+.main .flex-wrp .flex-item image {
+  position: absolute;
+  width: 145rpx;
+  height: 137rpx;
+  top: 65rpx;
+  right: 50rpx;
+}
+.main .flex-wrp .flex-item .title {
+  position: absolute;
+  top: 20rpx;
+  z-index: 2;
+  margin-top: 75rpx;
+  margin-left: 100rpx;
+  font-size: 52rpx;
+  color: #fff;
+}
