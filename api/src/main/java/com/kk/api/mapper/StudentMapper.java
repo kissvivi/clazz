@@ -9,4 +9,6 @@ public interface StudentMapper extends MyMapper<Student> {
     @Update("update student set password = '123456' where id =#{id}")
     int resetPassword(Long id);
 
+
+
 }

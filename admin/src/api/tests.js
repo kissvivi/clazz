@@ -30,3 +30,12 @@ export function remove(testsId) {
     method: 'delete'
   })
 }
+
+
+export function updateStatus(testsForm) {
+  return request({
+    url: '/tests/updateStatus',
+    method: 'put',
+    data: testsForm
+  })
+}

@@ -24,11 +24,11 @@
 
           <el-tag v-if ="scope.row.status === 1"
                   type="success"
-                  disable-transitions>已发布</el-tag>
+                  disable-transitions>已发布{{getClazzName(scope.row.clazzId)}}</el-tag>
 
           <el-button v-if ="scope.row.status === 0"
           size="mini"
-                  @click.native.prevent="showAddRoleDialog"
+                  @click.native.prevent="showTestsDialog(scope.row)"
                   disable-transitions>未发布（点击发布）</el-button>
           <!-- <el-tag
                   :type="scope.row.status === 1 ? 'primary' : 'success'"
@@ -78,8 +78,8 @@
     <el-dialog title="发布考试/问卷" :visible.sync="dialogFormVisible">
       <el-form status-icon class="small-space" label-position="left" label-width="100px" style="width: 800px; margin-left:50px;"
         :model="tempClazz" ref="tempClazz">
-<el-form-item label="班级选择" prop="name" required>
-        <el-select v-model="tempClazz.id" placeholder="请选择班级">
+<el-form-item label="班级选择" prop="name" >
+        <el-select v-model="temptests.clazzId" placeholder="请选择班级">
             <el-option
               v-for="item in clazzList"
               :key="item.id"
@@ -102,7 +102,8 @@
 <script>
   import {
     list as getTestsList,
-    remove
+    remove,
+    updateStatus
   } from '@/api/tests'
   import {
     list as getClazzList,
@@ -166,7 +167,7 @@
         filterMethod(query, item) {
           return item.pinyin.indexOf(query) > -1;
         },
-
+        testsId:1,
         clazzList:[],
         testsList: [],
         permissionList: [],
@@ -189,10 +190,10 @@
         btnLoading: false,
         temptests: {
           id: '',
-          name: '',
-          permissionIdList: []
         },
-        tempClazz:{},
+        tempClazz:{
+          clazzId:1,
+        },
         createRules: {
           name: [{
             required: true,
@@ -216,6 +217,7 @@
           this.testsList = response.data.list
           this.total = response.data.total
           this.listLoading = false
+          getClazzList()
         }).catch(res => {
           this.$message.error('加载列表失败')
         })
@@ -233,6 +235,15 @@
         this.$message.error('加载班级列表失败')
       })
     },
+    /**
+     * 发布
+     */
+    showTestsDialog(row) {
+      this.dialogFormVisible = true
+      this.temptests.id= row.id
+      this.getClazzList()
+      //this.tempClazz.name = ''
+    },
       /**
        * 根据code 得到类型
        * @param {Object} type
@@ -243,12 +254,28 @@
         else
         return '问卷调查'
       },
+      getClazzName(clazzId){
+        let clazz = this.clazzList.find(function(value, index, arr) {
+          return value = clazzId;
+        })
+        return clazz
+      },
 
       /**
        * 发布题目更新班级与状态
        */
       updateStatus(){
-        this.$message.error('更新班级与状态')
+
+        updateStatus(this.temptests).then(() => {
+          this.$message.success('发布成功')
+          this.getTestsList()
+          this.dialogFormVisible = false
+          this.btnLoading = false
+        }).catch(res => {
+          this.$message.error('更新班级与状态失败')
+        })
+
+        //this.$message.error('更新班级与状态')
       },
       /**
        * 改变每页数量
@@ -275,16 +302,7 @@
       getTableIndex(index) {
         return (this.listQuery.page - 1) * this.listQuery.size + index + 1
       },
-      /**
-       * 显示新增角色对话框
-       */
-      showAddRoleDialog() {
-        this.dialogFormVisible = true
-        this.dialogStatus = 'add'
-        this.tempRole.name = ''
-        this.tempRole.id = ''
-        this.tempRole.permissionIdList = []
-      },
+
       /**
        * 显示更新角色的对话框
        * @param index 角色下标

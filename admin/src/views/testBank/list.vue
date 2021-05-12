@@ -25,6 +25,7 @@
             size="mini"
             icon="el-icon-plus"
             v-if="hasPermission('testBank:add')"
+
             @click.native.prevent="showAddTestsDialog"
           >组卷/生成问卷</el-button>
         </el-form-item>
@@ -32,6 +33,8 @@
     </div>
     <el-table
       :data="testBankList"
+     @selection-change="handleSelectionChange"
+      ref="multipleTable"
       v-loading.body="listLoading"
       element-loading-text="loading"
       border
@@ -220,7 +223,6 @@
         label-width="100px"
         style="width: 500px; margin-left:50px;"
         :model="tempTestBank"
-        :rules="createRules"
         ref="tempTests"
       >
         <el-form-item label="编号" prop="code" required>
@@ -258,7 +260,7 @@
         <el-button
           type="success"
           :loading="btnLoading"
-          @click.native.prevent="addTestBank"
+          @click.native.prevent="addTests"
         >添加</el-button>
       </div>
     </el-dialog>
@@ -271,6 +273,9 @@
     add as addTestBank,
     remove,
   } from '@/api/testBank'
+  import {
+    add as addTests
+  } from '@/api/tests'
 import {
   listRoleWithPermission,
   listResourcePermission,
@@ -304,7 +309,8 @@ export default {
       }
     }
     return {
-
+      tbids:[],//题muid集
+      multipleSelection:[],
       options: [{
                 value: 101,
                 label: '试题'
@@ -410,60 +416,36 @@ export default {
     showAddTestsDialog() {
       this.dialogTestsFormVisible = true
       this.dialogStatus = 'addTests'
+
+      // const _selectData = this.$refs.multipleTable.selection
+
+      // console.log("_selectData："+this.$refs.multipleTable.selection.title)
+
+      // this.$message.success('_selectData:'+_selectData.title+_selectData.id)
+
       // this.tempTestBank.name = ''
       // this.tempTestBank.id = ''
     },
+
+//监听选择器变化
+    handleSelectionChange(val) {
+        this.multipleSelection = val;
+        console.log('multipleSelection:'+val[0].title)
+        this.tempTests.tbIds =[]
+        val.forEach(row => {
+              if (row) {
+                this.tempTests.tbIds.push(row.id)
+              }
+        })
+        this.tempTests.tbIds = String(this.tempTests.tbIds)
+        },
+        
     //过滤类型
      filterType(value, row) {
             console.log("value:"+value)
             //console.log("row.type:"+row.type)
             return row.type === value;
           },
-
-    /**
-     * 显示更新角色的对话框
-     * @param index 角色下标
-     */
-    showUpdateRoleDialog(index) {
-      this.dialogFormVisible = true
-      this.dialogStatus = 'update'
-      const role = this.testBankList[index]
-      this.tempTestBank.name = role.name
-      this.tempTestBank.id = role.id
-      this.tempTestBank.permissionIdList = []
-      for (let i = 0; i < role.resourceList.length; i++) {
-        const handleList = role.resourceList[i].handleList
-        for (let j = 0; j < handleList.length; j++) {
-          const handle = handleList[j]
-          this.tempTestBank.permissionIdList.push(handle.id)
-        }
-      }
-    },
-    /**
-     * 显示角色权限的对话框
-     * @param index 角色下标
-     */
-    showRoleDialog(index) {
-      this.dialogFormVisible = true
-      this.dialogStatus = 'show'
-      const role = this.testBankList[index]
-      this.tempTestBank.name = role.name
-      this.tempTestBank.id = role.id
-      this.tempTestBank.permissionIdList = []
-      let resourceList = []
-      if (role.name === '超级管理员') {
-        resourceList = this.permissionList
-      } else {
-        resourceList = role.resourceList
-      }
-      for (let i = 0; i < resourceList.length; i++) {
-        const handleList = resourceList[i].handleList
-        for (let j = 0; j < handleList.length; j++) {
-          const handle = handleList[j]
-          this.tempTestBank.permissionIdList.push(handle.id)
-        }
-      }
-    },
     /**
      * 添加题目
      */
@@ -483,13 +465,27 @@ export default {
             this.dialogFormVisible = false
             this.btnLoading = false
           }).catch(res => {
-            this.$message.error('添加角色失败')
+            this.$message.error('添加题目失败')
           })
         // } else {
         //   console.log('表单无效')
         // }
       })
     },
+
+    addTests(){
+      addTests(this.tempTests).then(() => {
+        this.$message.success('添加成功')
+        this.geTestBankList()
+        this.dialogTestsFormVisible = false
+        this.btnLoading = false
+      }).catch(res => {
+        this.$message.error('添加考试失败')
+      })
+
+
+    },
+
     // /**
     //  * 修改角色
     //  */

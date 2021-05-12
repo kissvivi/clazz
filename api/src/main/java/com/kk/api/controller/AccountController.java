@@ -2,6 +2,7 @@ package com.kk.api.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kk.api.dto.LoginDto;
 import com.kk.api.service.AccountService;
 import com.kk.api.service.impl.AccountDetailsServiceImpl;
 import com.kk.api.core.jwt.JwtUtil;
@@ -158,6 +159,35 @@ public class AccountController {
     this.accountService.updateLoginTimeByName(account.getName());
     return this.getToken(account.getName());
   }
+
+
+  @PostMapping("login")
+  public Result teaLogin(@RequestBody final LoginDto loginDto) {
+    // 用户名登录
+    Account dbAccount = null;
+    if (loginDto.getUsername() != null) {
+      dbAccount = this.accountService.getBy("name", loginDto.getUsername());
+      if (dbAccount == null) {
+        return ResultGenerator.genFailedResult("用户名错误");
+      }
+    }
+//    if (loginDto.getPhone() != null) {
+//      dbAccount = this.accountService.getBy("phone", account.getPhone());
+//      if (dbAccount == null) {
+//        return ResultGenerator.genFailedResult("手机号错误");
+//      }
+//      account.setName(dbAccount.getName());
+//    }
+    // 验证密码
+    //noinspection ConstantConditions
+    if (!this.accountService.verifyPassword(loginDto.getPassword(), dbAccount.getPassword())) {
+      return ResultGenerator.genFailedResult("密码错误");
+    }
+    // 更新登录时间
+    this.accountService.updateLoginTimeByName(dbAccount.getName());
+    return ResultGenerator.genOkResult(dbAccount);
+  }
+
 
   @DeleteMapping("/token")
   public Result logout(final Principal principal) {

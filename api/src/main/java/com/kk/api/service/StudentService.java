@@ -11,4 +11,6 @@ public interface StudentService extends Service<Student> {
 
     int resetPassword(Long id);
 
+    boolean verifyPassword(String rawPassword, String encodedPassword);
+
 }

@@ -31,7 +31,7 @@
       <el-table-column label="#" align="center" prop="id" width="80">
       </el-table-column>
       <el-table-column label="班级名" align="center" prop="name" />
-      <el-table-column label="课程名" align="center" prop="time">
+      <el-table-column label="课程名" align="center" prop="course">
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="time">
         <template slot-scope="scope">{{ unix2CurrentTime(scope.row.time) }}</template>
@@ -110,7 +110,7 @@
                 v-model="tempClazz.name"
               ></el-input>
             </el-form-item>
-            <el-form-item label="课程名" prop="name" required>
+            <el-form-item label="课程名" prop="course" required>
               <el-input
                 :disabled="dialogStatus === 'show'"
                 type="text"

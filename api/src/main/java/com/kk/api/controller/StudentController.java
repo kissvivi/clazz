@@ -2,6 +2,8 @@ package com.kk.api.controller;
 
 import com.kk.api.core.response.Result;
 import com.kk.api.core.response.ResultGenerator;
+import com.kk.api.dto.LoginDto;
+import com.kk.api.entity.Account;
 import com.kk.api.entity.Student;
 import com.kk.api.service.StudentService;
 import com.github.pagehelper.PageHelper;
@@ -64,6 +66,34 @@ return ResultGenerator.genOkResult(pageInfo);
         studentService.resetPassword(id);
         return ResultGenerator.genOkResult();
     }
+    @PostMapping("login")
+    public Result login(@RequestBody final LoginDto loginDto) {
+
+        // 用户名登录
+        Student student = null;
+        if (loginDto.getUsername() != null) {
+            student = this.studentService.getBy("name", loginDto.getUsername());
+            if (student == null) {
+                return ResultGenerator.genFailedResult("用户名错误");
+            }
+        }
+//        // x学号登录
+//        if (loginDto.getCode() != null) {
+//            student = this.studentService.getBy("phone", loginDto.getCode());
+//            if (student == null) {
+//                return ResultGenerator.genFailedResult("手机号错误");
+//            }
+//            loginDto.setCode(student.getCode());
+//        }
+        // 验证密码
+        //noinspection ConstantConditions
+        if (!loginDto.getPassword().equals(student.getPassword()) ) {
+            return ResultGenerator.genFailedResult("密码错误");
+        }
+
+        return ResultGenerator.genOkResult(student);
+    }
+
 }
 
 

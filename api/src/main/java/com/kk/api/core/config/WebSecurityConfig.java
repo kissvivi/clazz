@@ -85,7 +85,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        .permitAll()
             .antMatchers("/**/*.css", "/QRImage/**","/**/*.js", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/doc.html","/swagger-ui.html").permitAll()
         // 允许匿名 POST 请求
-        .antMatchers(HttpMethod.POST, "/account", "/account/token")
+        .antMatchers(HttpMethod.POST, "/account", "/account/token", "/account/login","/student/login")
         .permitAll()
         // 允许匿名 DELETE 请求
         .antMatchers(HttpMethod.DELETE, "/upload/image/**", "/upload/video/**")
