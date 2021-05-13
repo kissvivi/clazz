@@ -7,6 +7,9 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
+    this.globalData.clazz = wx.getStorageSync('clazz')
+    this.globalData.token = wx.getStorageSync('token')
+
     // 登录
     wx.login({
       success: res => {
@@ -15,6 +18,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    clazz:{},
+    token:'',
   }
 })

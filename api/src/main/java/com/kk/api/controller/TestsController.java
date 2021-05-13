@@ -2,6 +2,7 @@ package com.kk.api.controller;
 
 import com.kk.api.core.response.Result;
 import com.kk.api.core.response.ResultGenerator;
+import com.kk.api.dto.ClazzTestsBank;
 import com.kk.api.entity.Tests;
 import com.kk.api.service.TestsService;
 import com.github.pagehelper.PageHelper;
@@ -63,6 +64,12 @@ public class TestsController {
     @GetMapping("/{clazzId}/findListByClazz")
     public Result getTestsList(@PathVariable Long clazzId) {
 
-        return ResultGenerator.genOkResult(testsService.getBy("clazz_id",clazzId));
+        //Tests tests = testsService.getBy("clazz_id",clazzId);
+
+        List<ClazzTestsBank> clazzTestsBankList = testsService.getClazzTestsBank(clazzId);
+        if(clazzTestsBankList!=null)
+            return ResultGenerator.genOkResult(clazzTestsBankList);
+        else
+            return ResultGenerator.genFailedResult("无题目列表");
     }
 }

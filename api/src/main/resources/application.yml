@@ -40,6 +40,8 @@ mybatis:
   type-aliases-package: com.kk.api.entity
   # 存放 mapper 映射文件的位置
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 mapper:
   # 多个接口时逗号隔开

@@ -40,6 +40,12 @@ Page({
 				},
 				success(res) {
 					if (res.data.code == 200) {
+
+						wx.setStorage({
+							key:"token",
+							data:res.data.data
+						})
+
 						wx.navigateTo({
 							url: "/pages/scan/scan",
 						})
@@ -69,6 +75,12 @@ Page({
 				},
 				success(res) {
 					if (res.data.code == 200) {
+
+						wx.setStorage({
+							key:"token",
+							data:res.data.data
+						})
+
 						wx.navigateTo({
 							url: "/pages/teacher/teacher",
 						})

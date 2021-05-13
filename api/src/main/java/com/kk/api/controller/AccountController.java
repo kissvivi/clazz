@@ -185,7 +185,7 @@ public class AccountController {
     }
     // 更新登录时间
     this.accountService.updateLoginTimeByName(dbAccount.getName());
-    return ResultGenerator.genOkResult(dbAccount);
+    return this.getToken(dbAccount.getName());
   }
 
 

@@ -46,6 +46,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         SerializerFeature.WriteNullNumberAsZero,
         // 美化输出
         SerializerFeature.PrettyFormat);
+    config.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);     //关闭循环引用
     converter.setFastJsonConfig(config);
     converter.setDefaultCharset(StandardCharsets.UTF_8);
     converters.add(converter);
