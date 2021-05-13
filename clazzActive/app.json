@@ -8,7 +8,8 @@
     "pages/logs/logs",
     "pages/test/test",
     "pages/teacher/teacher",
-    "pages/testList/testList"
+    "pages/testList/testList",
+    "pages/stuTestList/stuTestList"
   ],
   "tabBar": {
     "color": "#999",

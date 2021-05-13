@@ -41,6 +41,12 @@
           "pathName": "pages/testList/testList",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "学生考试列表",
+          "pathName": "pages/stuTestList/stuTestList",
+          "query": "",
+          "scene": null
         }
       ]
     }

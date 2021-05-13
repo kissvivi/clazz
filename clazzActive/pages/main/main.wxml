@@ -5,12 +5,9 @@
             <image src="/assets/images/do-question.png">
             </image>
             <view class="title" > 开始答题 </view>
-            <!-- <view class="">do-question</view> -->
         </view>
-        <view class="flex-item" catchtap="toUrl" style="background-image:url(https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg);">
-            <!-- <image mode="aspectFill" src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"> -->
-             
-            <!-- </image> -->
+        <view class="flex-item" bindtap="toUrl" style="background-image:url(https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg);">
+            
             <view class="title"> 问卷调查 </view>
         </view>
     </view>

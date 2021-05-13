@@ -10,10 +10,8 @@ Page({
 
 	toTestsUrl(){
 		wx.navigateTo({
-			url: "/pages/test/test",
+			url: "/pages/stuTestList/stuTestList",
 			})
-		
-
 	},
 
 	toUrl(){
