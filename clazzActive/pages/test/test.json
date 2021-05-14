@@ -6,6 +6,8 @@
       "van-tabbar-item": "@vant/weapp/tabbar-item/index",
       "van-swipe-cell": "@vant/weapp/swipe-cell/index",
       "van-image": "@vant/weapp/image/index",
-      "van-count-down": "@vant/weapp/count-down/index"
+      "van-count-down": "@vant/weapp/count-down/index",
+      "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index"
     }
   }

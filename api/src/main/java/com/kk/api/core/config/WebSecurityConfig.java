@@ -83,7 +83,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 允许匿名 GET 请求
 //        .antMatchers("/swagger-ui.html**", "/swagger-resources**", "/webjars/**", "/v2/**")
 //        .permitAll()
-            .antMatchers("/**/*.css", "/QRImage/**","/**/*.js", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/doc.html","/swagger-ui.html").permitAll()
+            .antMatchers("/**/*.css", "/QRImage/**","/**/*.js","/student/exportTemp/**","/student/importExcel/**", "/swagger-resources/**", "/webjars/**", "/v2/api-docs","/doc.html","/swagger-ui.html").permitAll()
         // 允许匿名 POST 请求
         .antMatchers(HttpMethod.POST, "/account", "/account/token", "/account/login","/student/login")
         .permitAll()

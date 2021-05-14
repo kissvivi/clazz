@@ -1,8 +1,13 @@
 package com.kk.api.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import javax.persistence.*;
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,11 +16,13 @@ public class Student {
     /**
      * 学号
      */
-    private Long code;
+    @Excel(name = "学号", orderNum = "0")
+    private String code;
 
     /**
      * 密码
      */
+    @Excel(name = "密码", orderNum = "1")
     private String password;
 
     /**
@@ -29,6 +36,7 @@ public class Student {
     /**
      * 姓名
      */
+    @Excel(name = "姓名", orderNum = "2")
     private String name;
 
     /**
@@ -50,7 +58,7 @@ public class Student {
      *
      * @return code - 学号
      */
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
@@ -59,7 +67,7 @@ public class Student {
      *
      * @param code 学号
      */
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

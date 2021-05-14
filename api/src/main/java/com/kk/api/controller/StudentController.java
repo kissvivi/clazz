@@ -12,14 +12,18 @@ import com.kk.api.service.StudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kk.api.service.impl.AccountDetailsServiceImpl;
+import com.kk.api.util.ExcelUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,7 +93,7 @@ public class StudentController {
         // 用户名登录
         Student student = null;
         if (loginDto.getUsername() != null) {
-            student = this.studentService.getBy("name", loginDto.getUsername());
+            student = this.studentService.getBy("code", loginDto.getUsername());
             if (student == null) {
                 return ResultGenerator.genFailedResult("用户名错误");
             }
@@ -110,6 +114,39 @@ public class StudentController {
 
         return this.getToken(student.getName());
     }
+
+
+
+    @GetMapping("/exportTemp")
+    public void export(HttpServletResponse response){
+        //模拟从数据库获取需要导出的数据
+        List<Student> studentList = new ArrayList<>();
+        Student student = new Student();
+        student.setCode("2021001");
+        student.setName("demo");
+        student.setPassword("123456");
+        //导出操作
+        ExcelUtils.exportExcel(studentList,"学生表","模板",Student.class,"学生导入模板表.xls",response);
+    }
+
+    @PostMapping("/importExcel")
+    public Result importExcel(MultipartFile file){
+        String filePath = "";
+        //解析excel，
+//      方式一:根据文件路径解析
+//        List<Person> personList = ExcelUtil.importExcel(filePath,1,1,Person.class);
+
+//      方式二:也可以使用MultipartFile,使用 FileUtil.importExcel(MultipartFile file, Integer titleRows, Integer headerRows, Class<T> pojoClass)导入
+        List<Student> studentList = ExcelUtils.importExcel(file, 1, 1, Student.class);
+        System.out.println("导入数据一共【"+studentList.size()+"】行");
+
+        studentService.save(studentList);
+        return  ResultGenerator.genOkResult();
+
+    }
+
+
+
 
     /**
      * 获得 token

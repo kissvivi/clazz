@@ -17,12 +17,20 @@
             v-if="hasPermission('student:add')"
             @click.native.prevent="showAddRoleDialog"
           >添加学生</el-button>
+          
           <el-button
             type="primary"
             size="mini"
             icon="el-icon-plus"
-            v-if="hasPermission('student:add')"
-            @click.native.prevent="showAddRoleDialog"
+            v-if="hasPermission('student:list')"
+            @click.native.prevent="downTmp"
+          >下载模板</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-plus"
+            v-if="hasPermission('student:list')"
+            @click.native.prevent="showUploadDialog = true"
           >一键导入</el-button>
         </el-form-item>
       </el-form>
@@ -139,6 +147,19 @@
       </div>
     </el-dialog>
     <!-- 学生添加结束 -->
+    
+    <el-dialog title="文件上传" :visible.sync="showUploadDialog">
+    <el-upload
+      class="upload-demo"
+      drag
+      action="http://localhost:8080/student/importExcel"
+      multiple>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="el-upload__tip" slot="tip">只能上传xls/xlsx文件，且不超过500kb</div>
+    </el-upload>
+    </el-dialog>
+    
   </div>
 </template>
 <script>
@@ -202,6 +223,7 @@ export default {
       },
       dialogStatus: 'add',
       dialogFormVisible: false,
+      showUploadDialog:false,
       dialogStudentFormVisible:false,
       textMap: {
         reset: '重置密码',
@@ -273,49 +295,8 @@ export default {
       this.tempStudent.code = ''
       this.tempStudent.password = ''
     },
-    /**
-     * 显示更新角色的对话框
-     * @param index 角色下标
-     */
-    showUpdateRoleDialog(index) {
-      this.dialogFormVisible = true
-      this.dialogStatus = 'update'
-      const role = this.roleList[index]
-      this.tempStudent.name = role.name
-      this.tempStudent.id = role.id
-      this.tempStudent.permissionIdList = []
-      for (let i = 0; i < role.resourceList.length; i++) {
-        const handleList = role.resourceList[i].handleList
-        for (let j = 0; j < handleList.length; j++) {
-          const handle = handleList[j]
-          this.tempStudent.permissionIdList.push(handle.id)
-        }
-      }
-    },
-    /**
-     * 显示角色权限的对话框
-     * @param index 角色下标
-     */
-    showRoleDialog(index) {
-      this.dialogFormVisible = true
-      this.dialogStatus = 'show'
-      const role = this.roleList[index]
-      this.tempStudent.name = role.name
-      this.tempStudent.id = role.id
-      this.tempStudent.permissionIdList = []
-      let resourceList = []
-      if (role.name === '超级管理员') {
-        resourceList = this.permissionList
-      } else {
-        resourceList = role.resourceList
-      }
-      for (let i = 0; i < resourceList.length; i++) {
-        const handleList = resourceList[i].handleList
-        for (let j = 0; j < handleList.length; j++) {
-          const handle = handleList[j]
-          this.tempStudent.permissionIdList.push(handle.id)
-        }
-      }
+    downTmp(){
+      window.location.href = process.env.BASE_API+'/student/exportTemp'
     },
     /**
      * 添加学生

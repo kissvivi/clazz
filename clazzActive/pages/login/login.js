@@ -30,13 +30,16 @@ Page({
 	},
 
 	toUrl() {
+
+		let that = this
+
 		if (this.data.userType == 1) {
 			wx.request({
 				url: 'http://127.0.0.1:8080/student/login',
 				method:'POST',
 				data: {
-					username: this.data.username,
-					password: this.data.password
+					username: that.data.username,
+					password: that.data.password
 				},
 				success(res) {
 					if (res.data.code == 200) {
@@ -44,6 +47,10 @@ Page({
 						wx.setStorage({
 							key:"token",
 							data:res.data.data
+						})
+						wx.setStorage({
+							key:"stuCode",
+							data:that.data.username
 						})
 
 						wx.navigateTo({
@@ -70,8 +77,8 @@ Page({
 				url: 'http://127.0.0.1:8080/account/login',
 				method:'POST',
 				data: {
-					username: this.data.username,
-					password: this.data.password
+					username: that.data.username,
+					password: that.data.password
 				},
 				success(res) {
 					if (res.data.code == 200) {

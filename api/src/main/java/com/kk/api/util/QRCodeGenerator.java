@@ -2,6 +2,7 @@ package com.kk.api.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Date;
@@ -19,6 +20,14 @@ public class QRCodeGenerator {
 
     public static String generateQRCodeImage(String text, int width, int height, String filePath) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
+
+//        boolean ISO = Charset.forName("ISO8859-1").newEncoder()
+//                .canEncode(text);
+//        if (ISO) {
+//            text = new String(text.getBytes("ISO8859-1"), "GB2312");
+//        }
+
+        text = new String(text.getBytes("UTF-8"), "ISO8859-1");
 
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
 

@@ -6,7 +6,10 @@
     </view>
     <view class="content" wx:if="{{result != ''}}">
         <!-- <view>扫码的内容:{{ result }}</view> -->
-        <view class="title">{{ className }}</view>
+        <view class="title">
+        {{ clazzName }} 
+        <van-tag color="#f2826a">{{course}}</van-tag> 
+        </view>
         <van-button type="primary" class="jion-btn" bind:click="jionClass">加入此班级</van-button>
         <!-- <view class="button" bindtap="jionClass">加入此班级</view> -->
     </view>

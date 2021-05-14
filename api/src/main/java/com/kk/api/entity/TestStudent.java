@@ -10,16 +10,16 @@ public class TestStudent {
     private Long id;
 
     /**
-     * 学生id
+     * 学生学号
      */
-    @Column(name = "stu_id")
-    private Long stuId;
+    @Column(name = "stu_code")
+    private String stuCode;
 
     /**
-     * 考试id
+     * 考试编号
      */
-    @Column(name = "t_code")
-    private Long tCode;
+    @Column(name = "tests_code")
+    private Long testsCode;
 
     /**
      * 分数
@@ -27,6 +27,36 @@ public class TestStudent {
     private Integer score;
 
     private Date time;
+
+    /**
+     * 自己的选择集合
+     */
+    @Column(name = "self_checks")
+    private String selfChecks;
+
+    /**
+     * 正确的选择集合
+     */
+    @Column(name = "ok_checks")
+    private String okChecks;
+
+    /**
+     * 正确题目个数
+     */
+    @Column(name = "ok_num")
+    private Integer okNum;
+
+    /**
+     * 班级id
+     */
+    @Column(name = "clazz_id")
+    private Long clazzId;
+
+    /**
+     * 题目集合
+     */
+    @Column(name = "tb_ids")
+    private String tbIds;
 
     /**
      * @return id
@@ -43,39 +73,39 @@ public class TestStudent {
     }
 
     /**
-     * 获取学生id
+     * 获取学生学号
      *
-     * @return stu_id - 学生id
+     * @return stu_code - 学生学号
      */
-    public Long getStuId() {
-        return stuId;
+    public String getStuCode() {
+        return stuCode;
     }
 
     /**
-     * 设置学生id
+     * 设置学生学号
      *
-     * @param stuId 学生id
+     * @param stuCode 学生学号
      */
-    public void setStuId(Long stuId) {
-        this.stuId = stuId;
+    public void setStuCode(String stuCode) {
+        this.stuCode = stuCode;
     }
 
     /**
-     * 获取考试id
+     * 获取考试编号
      *
-     * @return t_code - 考试id
+     * @return t_code - 考试编号
      */
-    public Long gettCode() {
-        return tCode;
+    public Long getTestsCode() {
+        return testsCode;
     }
 
     /**
-     * 设置考试id
+     * 设置考试编号
      *
-     * @param tCode 考试id
+     * @param tCode 考试编号
      */
-    public void settCode(Long tCode) {
-        this.tCode = tCode;
+    public void setTestsCode(Long tCode) {
+        this.testsCode = tCode;
     }
 
     /**
@@ -108,5 +138,95 @@ public class TestStudent {
      */
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    /**
+     * 获取自己的选择集合
+     *
+     * @return self_checks - 自己的选择集合
+     */
+    public String getSelfChecks() {
+        return selfChecks;
+    }
+
+    /**
+     * 设置自己的选择集合
+     *
+     * @param selfChecks 自己的选择集合
+     */
+    public void setSelfChecks(String selfChecks) {
+        this.selfChecks = selfChecks;
+    }
+
+    /**
+     * 获取正确的选择集合
+     *
+     * @return ok_checks - 正确的选择集合
+     */
+    public String getOkChecks() {
+        return okChecks;
+    }
+
+    /**
+     * 设置正确的选择集合
+     *
+     * @param okChecks 正确的选择集合
+     */
+    public void setOkChecks(String okChecks) {
+        this.okChecks = okChecks;
+    }
+
+    /**
+     * 获取正确题目个数
+     *
+     * @return ok_num - 正确题目个数
+     */
+    public Integer getOkNum() {
+        return okNum;
+    }
+
+    /**
+     * 设置正确题目个数
+     *
+     * @param okNum 正确题目个数
+     */
+    public void setOkNum(Integer okNum) {
+        this.okNum = okNum;
+    }
+
+    /**
+     * 获取班级id
+     *
+     * @return clazz_id - 班级id
+     */
+    public Long getClazzId() {
+        return clazzId;
+    }
+
+    /**
+     * 设置班级id
+     *
+     * @param clazzId 班级id
+     */
+    public void setClazzId(Long clazzId) {
+        this.clazzId = clazzId;
+    }
+
+    /**
+     * 获取题目集合
+     *
+     * @return tb_ids - 题目集合
+     */
+    public String getTbIds() {
+        return tbIds;
+    }
+
+    /**
+     * 设置题目集合
+     *
+     * @param tbIds 题目集合
+     */
+    public void setTbIds(String tbIds) {
+        this.tbIds = tbIds;
     }
 }

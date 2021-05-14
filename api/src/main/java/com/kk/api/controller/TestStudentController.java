@@ -13,10 +13,10 @@ import java.util.List;
 
 /**
 * @author kk
-* @date 2021/05/02
+* @date 2021/05/14
 */
 @RestController
-@RequestMapping("/test/student")
+@RequestMapping("/testStudent")
 public class TestStudentController {
 @Resource
 private TestStudentService testStudentService;

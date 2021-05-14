@@ -5,7 +5,8 @@ const app = getApp()
 Page({
 	data: {
 		result: '',
-		className: '',
+		clazzName: '',
+		course:'',
 	},
 	
 	// 扫码
@@ -15,7 +16,10 @@ Page({
 			success (res) {
 				that.setData({ result: res.result});
 				that.data.result = JSON.parse(res.result);
-				that.setData({ className: that.data.result.course});
+				that.setData({ 
+					clazzName: that.data.result.name,
+					course: that.data.result.course
+				});
 				
 				//存储班级id->缓存
 
@@ -24,7 +28,13 @@ Page({
 					data:res.result
 				})
 
+				let name = res.result.name
+				let course = res.result.course
+				console.log(decodeURI(escape(name)))
+				console.log(decodeURI(escape(course)))
 				console.log(res.result)
+				console.log(res.charSet)
+				
 			}
 		})
 	},
