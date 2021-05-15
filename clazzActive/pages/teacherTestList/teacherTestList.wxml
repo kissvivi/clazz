@@ -1,0 +1,18 @@
+<view class="exam">
+    <van-cell-group wx:for="{{list}}" wx:key="id" wx:for-item="item">
+        <van-cell title="{{item.title}}" label="{{ item.code}}" bind:click="toTestsUrl" data-item="{{item}}">
+            <van-tag type="success" wx-if="{{item.status==1}}">已发布</van-tag>
+            <view bindtap="updateStatus" data-id="{{item.id}}">
+                <van-tag type="primary" wx-if="{{item.status==0}}">点击发布</van-tag>
+            </view>
+        </van-cell>
+    </van-cell-group>
+    <!-- <view wx:for="{{list}}" wx:key="id" wx:for-item="item" >
+        <view bind:click="toTestsUrl()">
+            <view>{{item.title}}</view>
+            <view>{{item.code}}</view>
+        </view>
+    </view> -->
+
+    <van-action-sheet show="{{ show }}" description="请选择班级" bind:cancel="cancelAction" cancel-text="取消" actions="{{ actions }}" bind:close="onClose" bind:select="onSelect" />
+</view>
