@@ -20,7 +20,12 @@ Page({
 		wx.navigateTo({
 			url: "/pages/teacherTestList/teacherTestList?type="+type,
 		  })
-	}
+	},
+	toStatisticsUrl(){
+		wx.navigateTo({
+			url: "/pages/statisticsList/statisticsList"
+		  })
+	},
 	
 	
 })

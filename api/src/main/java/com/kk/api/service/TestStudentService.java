@@ -1,5 +1,6 @@
 package com.kk.api.service;
 
+import com.kk.api.dto.ScoreRank;
 import com.kk.api.dto.TestStudentDto;
 import com.kk.api.entity.TestStudent;
 import com.kk.api.core.service.Service;
@@ -16,6 +17,11 @@ public interface TestStudentService extends Service<TestStudent> {
     Integer updateTestStudentByStuCodeAndTestsCode(TestStudent testStudent);
 
     List<TestStudentDto> findTestsByStuCode(Long stuCode);
+
+    List<TestStudentDto> findTests();
+
+    ScoreRank getScoreRankByTestsCode(Long testsCode);
+
 
 
 }

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "van-progress": "@vant/weapp/progress/index",
+    "van-tag": "@vant/weapp/tag/index"
+  }
+}

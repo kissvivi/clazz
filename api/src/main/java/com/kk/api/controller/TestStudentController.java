@@ -2,6 +2,7 @@ package com.kk.api.controller;
 
 import com.kk.api.core.response.Result;
 import com.kk.api.core.response.ResultGenerator;
+import com.kk.api.dto.ScoreRank;
 import com.kk.api.dto.TestStudentDto;
 import com.kk.api.entity.TestStudent;
 import com.kk.api.service.TestStudentService;
@@ -68,6 +69,20 @@ public class TestStudentController {
     public Result listByCode(@PathVariable Long code) {
         List<TestStudentDto> list = testStudentService.findTestsByStuCode(code);
         return ResultGenerator.genOkResult(list);
+    }
+
+    @GetMapping("/selfTestList")
+    public Result listSelf() {
+        List<TestStudentDto> list = testStudentService.findTests();
+        return ResultGenerator.genOkResult(list);
+    }
+
+    @GetMapping("/{code}/scoreRank")
+    public Result scoreRank(@PathVariable Long code) {
+
+        ScoreRank scoreRank = testStudentService.getScoreRankByTestsCode(code);
+
+        return ResultGenerator.genOkResult(scoreRank);
     }
 
 

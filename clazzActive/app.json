@@ -11,7 +11,9 @@
     "pages/testList/testList",
     "pages/stuTestList/stuTestList",
     "pages/selfTestList/selfTestList",
-    "pages/teacherTestList/teacherTestList"
+    "pages/teacherTestList/teacherTestList",
+    "pages/statistics/statistics",
+    "pages/statisticsList/statisticsList"
   ],
   "tabBar": {
     "color": "#999",

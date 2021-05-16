@@ -49,8 +49,14 @@
           "scene": null
         },
         {
-          "name": "pages/teacher/teacher",
+          "name": "教师主页",
           "pathName": "pages/teacher/teacher",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "统计",
+          "pathName": "pages/statistics/statistics",
           "query": "",
           "scene": null
         }

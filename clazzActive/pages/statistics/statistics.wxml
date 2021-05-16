@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<view class="main">
+  <view class="main-title"> 考试成绩分布统计 </view>
+  <view class="card">
+    <view class="title">  <van-tag plain size="medium" type="success"> {{scoreRank.countStu}}</van-tag> 位学生-已作答</view>
+  </view>
+  <view class="card">
+    <view class="title"> 90 ~ 100 :</view>
+    <van-progress color="#FE4365" percentage="{{scoreRank.s90100}}" class="content"  stroke-width="8" />
+  </view>
+  <view class="card">
+    <view class="title">80 ~ 89 :</view>
+    <van-progress color="#FC9D9A" percentage="{{scoreRank.s8089}}" class="content"/>
+  </view>
+  <view class="card">
+    <view class="title">70 ~ 79 :</view>
+    <van-progress color="#F9CDAD" percentage="{{scoreRank.s7079}}" class="content"/>
+  </view>
+  <view class="card">
+    <view class="title">60 ~ 69 :</view>
+    <van-progress color="#C8C8A9" percentage="{{scoreRank.s6069}}" class="content"/>
+  </view>
+  <view class="card">
+    <view class="title">不及格 :</view>
+    <van-progress color="#f2826a" percentage="{{scoreRank.s59}}" class="content"/>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="exam">
+    <van-cell-group wx:for="{{list}}" wx:key="id" wx:for-item="item" >
+        <van-cell title="{{item.title}}" label="{{item.code}}" is-link bind:click="toTestsUrl" data-code="{{item.code}}">{{toTitle}}</van-cell>
+    </van-cell-group>
+    <!-- <view wx:for="{{list}}" wx:key="id" wx:for-item="item" >
+        <view bind:click="toTestsUrl()">
+            <view>{{item.title}}</view>
+            <view>{{item.code}}</view>
+        </view>
+    </view> -->
+</view>
