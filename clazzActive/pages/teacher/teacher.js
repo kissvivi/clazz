@@ -9,10 +9,16 @@ Page({
 		imgList:[],
 		result: '原址',
 	},
-
-	toUrl(){
+	toTestsUrl(){
+		let type =101
 		wx.navigateTo({
-			url: "/pages/test/test",
+			url: "/pages/teacherTestList/teacherTestList?type="+type,
+		  })
+	},
+	toUrl(){
+		let type =102
+		wx.navigateTo({
+			url: "/pages/teacherTestList/teacherTestList?type="+type,
 		  })
 	}
 	

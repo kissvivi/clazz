@@ -54,7 +54,7 @@ public class StudentController {
         return ResultGenerator.genOkResult();
     }
 
-    @PatchMapping
+    @PutMapping
     public Result update(@RequestBody Student student) {
         studentService.update(student);
         return ResultGenerator.genOkResult();
@@ -84,6 +84,17 @@ public class StudentController {
     @PutMapping("resetPassword/{id}")
     public Result resetPassword(@PathVariable Long id) {
         studentService.resetPassword(id);
+        return ResultGenerator.genOkResult();
+    }
+
+    /**
+     * 修改密码
+     * @param student
+     * @return
+     */
+    @PutMapping("alterPassword")
+    public Result alterPassword(@RequestBody Student student) {
+        studentService.alterPassword(student.getCode(),student.getPassword());
         return ResultGenerator.genOkResult();
     }
 

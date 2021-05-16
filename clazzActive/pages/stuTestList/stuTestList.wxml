@@ -1,7 +1,7 @@
 
 <view class="exam">
     <van-cell-group wx:for="{{list}}" wx:key="id" wx:for-item="item" >
-        <van-cell title="{{item.title}}" label="{{item.code}}" value="开始答题" is-link bind:click="toTestsUrl" data-item="{{item}}"/>
+        <van-cell title="{{item.title}}" label="{{item.code}}" is-link bind:click="toTestsUrl" data-item="{{item}}">{{toTitle}}</van-cell>
     </van-cell-group>
     <!-- <view wx:for="{{list}}" wx:key="id" wx:for-item="item" >
         <view bind:click="toTestsUrl()">

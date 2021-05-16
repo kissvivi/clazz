@@ -5,9 +5,23 @@ Page({
     data: {
 			token: '',
 			list: [],
+			type:0,
+			toTitle:"开始答题",
     },
 
-		onLoad: function() {
+		onLoad: function(options) {
+
+			console.log("options"+options.type)
+			this.setData({
+				type:options.type
+			})
+
+			if(options.type == 102){
+				this.setData({
+					toTitle:"开始评价"
+				})
+			}
+
 			let that = this;
 			wx.getStorage({
 				key: 'clazz',
@@ -33,8 +47,13 @@ Page({
 				success(res) {
 					if (res.data.code == 200) {
 						// that.data.list = res.data.data;
+
+						let typeList = res.data.data;
+
+						typeList = typeList.filter(item =>item .type == that.data.type)
+
 						that.setData({
-							list: res.data.data
+							list: typeList
 						})
 						 console.log(that.data.list)
 					} else {

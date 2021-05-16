@@ -7,7 +7,7 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="stu_code" jdbcType="BIGINT" property="stuCode" />
-    <result column="t_code" jdbcType="BIGINT" property="tCode" />
+    <result column="tests_code" jdbcType="BIGINT" property="testsCode" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="self_checks" jdbcType="VARCHAR" property="selfChecks" />
@@ -15,5 +15,6 @@
     <result column="ok_num" jdbcType="INTEGER" property="okNum" />
     <result column="clazz_id" jdbcType="BIGINT" property="clazzId" />
     <result column="tb_ids" jdbcType="VARCHAR" property="tbIds" />
+    <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
 </mapper>

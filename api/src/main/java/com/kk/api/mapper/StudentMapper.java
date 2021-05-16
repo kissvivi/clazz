@@ -9,6 +9,7 @@ public interface StudentMapper extends MyMapper<Student> {
     @Update("update student set password = '123456' where id =#{id}")
     int resetPassword(Long id);
 
-
+    @Update("update student set password =#{password} where code =#{code}")
+    int alterPassword(String code,String password);
 
 }

@@ -13,7 +13,7 @@ public class TestStudent {
      * 学生学号
      */
     @Column(name = "stu_code")
-    private String stuCode;
+    private Long stuCode;
 
     /**
      * 考试编号
@@ -59,6 +59,11 @@ public class TestStudent {
     private String tbIds;
 
     /**
+     * 分类
+     */
+    private Integer type;
+
+    /**
      * @return id
      */
     public Long getId() {
@@ -77,7 +82,7 @@ public class TestStudent {
      *
      * @return stu_code - 学生学号
      */
-    public String getStuCode() {
+    public Long getStuCode() {
         return stuCode;
     }
 
@@ -86,14 +91,14 @@ public class TestStudent {
      *
      * @param stuCode 学生学号
      */
-    public void setStuCode(String stuCode) {
+    public void setStuCode(Long stuCode) {
         this.stuCode = stuCode;
     }
 
     /**
      * 获取考试编号
      *
-     * @return t_code - 考试编号
+     * @return tests_code - 考试编号
      */
     public Long getTestsCode() {
         return testsCode;
@@ -102,10 +107,10 @@ public class TestStudent {
     /**
      * 设置考试编号
      *
-     * @param tCode 考试编号
+     * @param testsCode 考试编号
      */
-    public void setTestsCode(Long tCode) {
-        this.testsCode = tCode;
+    public void setTestsCode(Long testsCode) {
+        this.testsCode = testsCode;
     }
 
     /**
@@ -228,5 +233,23 @@ public class TestStudent {
      */
     public void setTbIds(String tbIds) {
         this.tbIds = tbIds;
+    }
+
+    /**
+     * 获取分类
+     *
+     * @return type - 分类
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * 设置分类
+     *
+     * @param type 分类
+     */
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

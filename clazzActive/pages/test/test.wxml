@@ -1,11 +1,13 @@
 <view class="exam">
     <view class="sortnumber">
-        <view class="left">倒计时
+        <view>
+            <view class="left">{{title}}
+            </view>
+
         </view>
-        <view class="left">
+        <view wx:if="{{isType}}" class="left">
             <van-count-down bind:finish="finished" seconds time="{{ time }}" />
         </view>
-
         <view class="right">
             <text class="num">{{nowIndex+1}}</text>/<text>{{length}}</text></view>
     </view>
@@ -18,18 +20,18 @@
         <view class="options">
             <!-- <view wx:for="{{options}}" wx:for-index="idx" wx:for-item="item" class="option"  data-value="{{JSON.stringify(item)}}" bindtap="selectOption"> -->
             <van-radio-group value="{{ radioValue }}" bind:change="onChangeSelect">
-               <van-radio name="A" checked-color="#1bcfad">
-               A {{question.selectA}}
-               </van-radio>
-               <van-radio name="B" checked-color="#1bcfad">
-               B {{question.selectB}}
-               </van-radio>
-               <van-radio name="C" checked-color="#1bcfad">
-               C {{question.selectC}}
-               </van-radio>
-               <van-radio name="D" checked-color="#1bcfad">
-               D {{question.selectD}}
-               </van-radio>
+                <van-radio name="A" checked-color="#1bcfad">
+                    A {{question.selectA}}
+                </van-radio>
+                <van-radio name="B" checked-color="#1bcfad">
+                    B {{question.selectB}}
+                </van-radio>
+                <van-radio name="C" checked-color="#1bcfad">
+                    C {{question.selectC}}
+                </van-radio>
+                <van-radio name="D" checked-color="#1bcfad">
+                    D {{question.selectD}}
+                </van-radio>
             </van-radio-group>
             <!-- <view class="content">A: {{question.selectA}}</view>
                 <view class="content">B: {{question.selectB}}</view>

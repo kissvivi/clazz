@@ -13,4 +13,6 @@ public interface StudentService extends Service<Student> {
 
     boolean verifyPassword(String rawPassword, String encodedPassword);
 
+    int alterPassword(String code,String password);
+
 }

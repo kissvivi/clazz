@@ -30,4 +30,8 @@ private StudentMapper studentMapper;
     public boolean verifyPassword(final String rawPassword, final String encodedPassword) {
         return this.passwordEncoder.matches(rawPassword, encodedPassword);
     }
+    @Override
+    public int alterPassword(String code,String password){
+        return studentMapper.alterPassword(code,password);
+    }
 }

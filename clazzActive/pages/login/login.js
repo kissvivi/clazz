@@ -7,7 +7,7 @@ Page({
 		username: '',
 		password: '',
 		active: 0,
-		userType: 2, // 1学生，2老师
+		userType: 1, // 1学生，2老师
 		radio: '1',
 	},
 	onClick(event) {

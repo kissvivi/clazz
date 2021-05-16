@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="main">
     <view class="flex-wrp" style="flex-direction:column;">
-        <view class="flex-item" style="background-color:#1BCFAD" bindtap="toUrl">
+        <view class="flex-item" style="background-color:#1BCFAD" bindtap="toTestsUrl">
             <image src="/assets/images/do-question.png">
             </image>
             <view class="title" > 发布测试题 </view>

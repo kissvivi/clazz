@@ -9,14 +9,16 @@ Page({
 	},
 
 	toTestsUrl(){
+		let type = 101
 		wx.navigateTo({
-			url: "/pages/stuTestList/stuTestList",
+			url: "/pages/stuTestList/stuTestList?type="+type,
 			})
 	},
 
 	toUrl(){
+		let type = 102
 		wx.navigateTo({
-			url: "/pages/test/test",
+			url: "/pages/stuTestList/stuTestList?type="+type,
 		  })
 	}
 	

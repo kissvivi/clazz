@@ -1,5 +1,6 @@
 package com.kk.api.service.impl;
 
+import com.kk.api.dto.TestStudentDto;
 import com.kk.api.mapper.TestStudentMapper;
 import com.kk.api.entity.TestStudent;
 import com.kk.api.service.TestStudentService;
@@ -8,10 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @author kk
-* @date 2021/05/14
+* @date 2021/05/15
 */
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -19,4 +21,18 @@ public class TestStudentServiceImpl extends AbstractService<TestStudent> impleme
 @Resource
 private TestStudentMapper testStudentMapper;
 
+    @Override
+    public TestStudent findTestStudentByStuCodeAndTestsCode(Long stuCode, Long testsCode) {
+        return testStudentMapper.findTestStudentByStuCodeAndTestsCode(stuCode,testsCode);
+    }
+
+    @Override
+    public Integer updateTestStudentByStuCodeAndTestsCode(TestStudent testStudent) {
+        return testStudentMapper.updateTestStudentByStuCodeAndTestsCode(testStudent);
+    }
+
+    @Override
+    public List<TestStudentDto> findTestsByStuCode(Long stuCode) {
+        return testStudentMapper.findTestsByStuCode(stuCode);
+    }
 }

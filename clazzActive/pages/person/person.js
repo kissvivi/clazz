@@ -8,9 +8,15 @@ Page({
     openid: '',
     nickName: '',
     avatarUrl: '',
+    alterShow: false,
     userInfo: {
       nickName: '',
       avatarUrl: '',
+    },
+    password:'',
+    studentFrom:{
+      code:'',
+      password:''
     }
   },
 
@@ -143,4 +149,73 @@ Page({
   //   })
   // },   
   
+  alterPassword(){
+      this.setData({
+        alterShow:true
+      })
+      this.data.studentFrom.code = wx.getStorageSync("stuCode")
+      
+  },
+  setPassword(event){
+
+    this.setData({
+      password:event.detail
+    })
+    this.data.studentFrom.password = this.data.password
+   
+  },
+
+  alterPasswordSubmit(){
+    console.log("修改密码提交")
+    
+    wx.request({
+      url: 'http://127.0.0.1:8080/student/alterPassword',
+      method:'PUT',
+      data: this.data.studentFrom,
+      header: {
+        'Authorization': wx.getStorageSync("token")
+      },
+      success(res) {
+        if (res.data.code == 200) {
+
+          wx.showToast({
+            title: '修改成功',
+            icon: 'success',
+            duration: 2000
+          })
+          setTimeout(function () {
+            wx.navigateTo({
+              url: "/pages/login/login",
+            })
+           }, 2000) //延迟时间 这里是2秒
+          
+
+        } else {
+          wx.showToast({
+            title: '修改失败',
+            icon: 'error',
+            duration: 2000
+          })
+        }
+      },
+      fail() {
+        wx.showToast({
+          title: '网络错误',
+          icon: 'error',
+          duration: 2000
+        })
+      }
+    })
+
+  },
+  onClose() {
+    this.setData({ alterShow: false });
+  },
+
+  bindSelfTestsList(){
+    wx.navigateTo({
+      url: "/pages/selfTestList/selfTestList",
+    })
+  }
+
 })
