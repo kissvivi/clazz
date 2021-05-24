@@ -2,7 +2,7 @@
 二维码课堂互动小程序
 
 
-### 感谢Zoctan 基于https://github.com/Zoctan/spring-boot-vue-admin开发
+### 感谢Zoctan 基于https://github.com/Zoctan/spring-boot-vue-admin 开发
 
 在Zoctan提供的管理模板基础上开发
 主要功能有
