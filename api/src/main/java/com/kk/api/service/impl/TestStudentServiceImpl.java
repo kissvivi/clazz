@@ -1,6 +1,7 @@
 package com.kk.api.service.impl;
 
 import com.kk.api.dto.ScoreRank;
+import com.kk.api.dto.TestStudentClazzDto;
 import com.kk.api.dto.TestStudentDto;
 import com.kk.api.mapper.TestStudentMapper;
 import com.kk.api.entity.TestStudent;
@@ -45,5 +46,10 @@ private TestStudentMapper testStudentMapper;
     @Override
     public ScoreRank getScoreRankByTestsCode(Long testsCode) {
         return testStudentMapper.getScoreRankByTestsCode(testsCode);
+    }
+
+    @Override
+    public List<TestStudentClazzDto> getStudentTestsByTestsCode(Long testsCode) {
+        return testStudentMapper.getStudentTestsByTestsCode(testsCode);
     }
 }

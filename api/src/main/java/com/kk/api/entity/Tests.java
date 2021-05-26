@@ -46,6 +46,19 @@ public class Tests {
     private Integer type;
 
     /**
+     * 考试时间
+     */
+    private Integer timeOver;
+
+    public Integer getTimeOver() {
+        return timeOver;
+    }
+
+    public void setTimeOver(Integer timeOver) {
+        this.timeOver = timeOver;
+    }
+
+    /**
      * @return id
      */
     public Long getId() {

@@ -2,6 +2,7 @@ package com.kk.api.mapper;
 
 import com.kk.api.core.mapper.MyMapper;
 import com.kk.api.dto.ScoreRank;
+import com.kk.api.dto.TestStudentClazzDto;
 import com.kk.api.dto.TestStudentDto;
 import com.kk.api.entity.TestStudent;
 import org.apache.ibatis.annotations.Select;
@@ -36,5 +37,15 @@ public interface TestStudentMapper extends MyMapper<TestStudent> {
             "SUM(CASE WHEN  score<60  THEN 1 ELSE 0 END)   AS s59 " +
             "FROM test_student WHERE tests_code =#{testsCode} and type =101")
     ScoreRank getScoreRankByTestsCode(Long testsCode);
+
+    /**
+     * 学生考试成绩导出
+     * @param testsCode
+     * @return
+     */
+    @Select("SELECT a.stu_code,a.tests_code,score,ok_num,b.name AS stu_name,c.name AS clazz_name,c.course AS course_name " +
+            "    FROM test_student a,student b,clazz c " +
+            "    WHERE a.stu_code = b.code AND a.clazz_id = c.id AND tests_code = #{testsCode}")
+    List<TestStudentClazzDto> getStudentTestsByTestsCode(Long testsCode);
 
 }

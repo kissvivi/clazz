@@ -3,14 +3,19 @@ package com.kk.api.controller;
 import com.kk.api.core.response.Result;
 import com.kk.api.core.response.ResultGenerator;
 import com.kk.api.dto.ScoreRank;
+import com.kk.api.dto.TestStudentClazzDto;
 import com.kk.api.dto.TestStudentDto;
+import com.kk.api.entity.Student;
 import com.kk.api.entity.TestStudent;
 import com.kk.api.service.TestStudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kk.api.util.ExcelUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,6 +88,18 @@ public class TestStudentController {
         ScoreRank scoreRank = testStudentService.getScoreRankByTestsCode(code);
 
         return ResultGenerator.genOkResult(scoreRank);
+    }
+
+    @GetMapping("/exportTestStudentList/{code}")
+    public void exportTestStudentList(@PathVariable Long code,HttpServletResponse response){
+        List<TestStudentClazzDto> testStudentClazzDtoList = testStudentService.getStudentTestsByTestsCode(code);
+
+        String filename = "学生成绩.xls";
+        if(!testStudentClazzDtoList.isEmpty())
+            filename = testStudentClazzDtoList.get(0).getClazzName()+testStudentClazzDtoList.get(0).getCourseName()+testStudentClazzDtoList.get(0).getTestsCode()+"学生成绩.xls";
+
+        //导出操作
+        ExcelUtils.exportExcel(testStudentClazzDtoList,"学生成绩表","学生成绩",TestStudentClazzDto.class,filename,response);
     }
 
 

@@ -116,7 +116,6 @@
         label-width="100px"
         style="width: 500px; margin-left:50px;"
         :model="tempTestBank"
-        :rules="createRules"
         ref="tempTestBank"
       >
         <el-form-item label="题目" prop="title" required>
@@ -203,12 +202,12 @@
           :loading="btnLoading"
           @click.native.prevent="addTestBank"
         >添加</el-button>
-        <el-button
+        <!-- <el-button
           v-if="dialogStatus === 'update'"
           type="primary"
           :loading="btnLoading"
           @click.native.prevent="updateRole"
-        >更新</el-button>
+        >更新</el-button> -->
       </div>
     </el-dialog>
     <!-- 添加题目结束 -->
@@ -220,11 +219,12 @@
         status-icon
         class="small-space"
         label-position="left"
-        label-width="100px"
+        label-width="120px"
         style="width: 500px; margin-left:50px;"
-        :model="tempTestBank"
+        :model="tempTests"
         ref="tempTests"
       >
+      
         <el-form-item label="编号" prop="code" required>
           <el-input
             :disabled="dialogStatus === 'show'"
@@ -252,6 +252,15 @@
                 :value="item.value">
               </el-option>
             </el-select>
+        </el-form-item>
+        <el-form-item v-if="tempTests.type == 101" label="考试时间(分钟)" prop="timeOver" required>
+          <el-input
+            :disabled="dialogStatus === 'show'"
+            type="text"
+            prefix-icon="el-icon-edit"
+            auto-complete="off"
+            v-model="tempTests.timeOver"
+          ></el-input>
         </el-form-item>
 
       </el-form>
@@ -301,13 +310,13 @@ export default {
      * @param value 角色名
      * @param callback 回调
      */
-    const validateRoleName = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('角色名不能为空'))
-      } else {
-        callback()
-      }
-    }
+    // const validateRoleName = (rule, value, callback) => {
+    //   if (value === '') {
+    //     callback(new Error('角色名不能为空'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       tbids:[],//题muid集
       multipleSelection:[],
@@ -340,9 +349,9 @@ export default {
         name: '',
         selectOk:'A',
       },
-      createRules: {
-        name: [{ required: true, trigger: 'blur', validator: validateRoleName }]
-      }
+      // createRules: {
+      //   name: [{ required: true, trigger: 'blur', validator: validateRoleName }]
+      // }
     }
   },
   computed: {
@@ -439,7 +448,7 @@ export default {
         })
         this.tempTests.tbIds = String(this.tempTests.tbIds)
         },
-        
+
     //过滤类型
      filterType(value, row) {
             console.log("value:"+value)

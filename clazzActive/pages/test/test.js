@@ -43,8 +43,12 @@ Page({
     eventChannel.on('acceptDataFromOpenerPage', function(data) {
       console.log(data,"data")
       that.data.testsCode = data.data.code
+      //that.data.time = data.data.timeOver
       that.data.type = data.data.type
       that.data.questionList = data.data.testBankList;
+      that.setData({
+        time: data.data.timeOver *60 *1000
+      })
       console.log( that.data.questionList,": that.data.questionList")
     })
     that.setData({

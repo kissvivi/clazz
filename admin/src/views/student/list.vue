@@ -21,7 +21,7 @@
           <el-button
             type="primary"
             size="mini"
-            icon="el-icon-plus"
+            icon="el-icon-download"
             v-if="hasPermission('student:list')"
             @click.native.prevent="downTmp"
           >下载模板</el-button>

@@ -18,6 +18,9 @@
       <template slot-scope="scope" >{{ getTypeName(scope.row.type) }}</template>
       </el-table-column>
       <el-table-column label="题目集" align="center" prop="tbIds" />
+      <el-table-column label="考试时间(分钟)" align="center" prop="timeOver" >
+      <template slot-scope="scope" >{{scope.row.timeOver}} 分钟</template>
+      </el-table-column>
       <el-table-column label="是否发布" align="center" prop="status">
 
         <template slot-scope="scope">
@@ -39,7 +42,15 @@
       </el-table-column>
       <el-table-column label="管理" align="center" v-if="hasPermission('tests:detail') || hasPermission('tests:update') || hasPermission('tests:delete')">
         <template slot-scope="scope">
-          <el-button type="info" size="mini" v-if="hasPermission('tests:detail')" @click.native.prevent="showRoleDialog(scope.$index)">查看</el-button>
+          <!-- <el-button type="info" size="mini" v-if="hasPermission('tests:detail')" @click.native.prevent="showRoleDialog(scope.$index)">查看</el-button> -->
+          <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-download"
+            plain
+            v-if="scope.row.status === 1 && scope.row.type === 101"
+            @click.native.prevent="downTestStudent(scope.row)"
+          >导出成绩</el-button>
           <el-button type="danger" size="mini" v-if="hasPermission('tests:delete')"
             @click.native.prevent="removeRole(scope.$index)">删除</el-button>
         </template>
@@ -259,6 +270,10 @@
           return value = clazzId;
         })
         return clazz
+      },
+
+      downTestStudent(row){
+        window.location.href = process.env.BASE_API+'/testStudent/exportTestStudentList/'+row.code
       },
 
       /**
