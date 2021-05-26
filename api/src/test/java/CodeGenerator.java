@@ -22,10 +22,10 @@ import static com.kk.api.core.constant.ProjectConstant.*;
 class CodeGenerator {
   // JDBC配置，请修改为你项目的实际配置
   private static final String JDBC_URL =
-      "jdbc:mysql://120.77.183.219:3306/admin_clazz"
+      "jdbc:mysql://xxxx:3306/admin_clazz"
           + "?useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC";
-  private static final String JDBC_USERNAME = "hrmdb";
-  private static final String JDBC_PASSWORD = "hrmdb123";
+  private static final String JDBC_USERNAME = "xxx";
+  private static final String JDBC_PASSWORD = "xxxx";
   private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
   // 项目在硬盘上的基础路径
   private static final String PROJECT_PATH = System.getProperty("user.dir");
